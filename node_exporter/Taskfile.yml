@@ -1,0 +1,18 @@
+version: '3'
+vars:
+  SERVER_ALIAS: "ocs01"
+  REMOTE_BASE_PATH: "~/var/ocs-server"
+tasks:
+  deploy:
+    desc: "Deploys Node Exporter service to the server"
+    cmds:
+      - rsync -avz --delete ./compose/ {{.SERVER_ALIAS}}:{{.REMOTE_BASE_PATH}}/node_exporter/
+      - |
+        ssh {{.SERVER_ALIAS}} << 'EOF'
+        cd {{.REMOTE_BASE_PATH}}/node_exporter
+        if [ -f "docker-compose.yml" ]; then
+          docker-compose down && docker-compose up -d && echo "Node Exporter restarted successfully."
+        else
+          echo "Error: docker-compose.yml not found in {{.REMOTE_BASE_PATH}}/node_exporter!"
+        fi
+        EOF

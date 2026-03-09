@@ -1,0 +1,15 @@
+version: '3.8'
+
+# Source for node_exporter Docker Compose setup:
+# github.com/prometheus/node_exporter
+services:
+  node-exporter:
+    image: prom/node-exporter:v1.9.1
+    container_name: node-exporter
+    restart: unless-stopped
+    ports:
+      - "9100:9100"
+    command:
+      - '--path.rootfs=/host'
+    volumes:
+      - '/:/host:ro,rslave'

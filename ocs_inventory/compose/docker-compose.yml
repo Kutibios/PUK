@@ -1,0 +1,100 @@
+version: '3'
+
+services:
+# Source for ocs-inventory Docker Compose setup:
+# ocsinventory-ng.org/?page_id=1548&lang=en
+  ocsapplication:
+    image: ocsinventory/ocsinventory-docker-image:2.12.1
+    container_name : ocsinventory-server
+    restart: always
+    ports:
+      - "8080:80"
+    expose:
+      - "80"
+    volumes:
+      - "perlcomdata:/etc/ocsinventory-server"
+      - "ocsreportsdata:/usr/share/ocsinventory-reports/ocsreports/extensions"
+      - "varlibdata:/var/lib/ocsinventory-reports"
+      - "httpdconfdata:/etc/apache2/conf-available"
+      - "profilesconfdata:/usr/share/ocsinventory-reports/ocsreports/config/profiles"
+    env_file: .env
+    environment:
+      TZ: ${TZ}
+      OCS_DB_SERVER: ${OCS_DB_SERVER}
+      OCS_DB_USER: ${OCS_DB_USER}
+      OCS_DB_PASS: ${OCS_DB_PASS}
+      OCS_DB_NAME: ${OCS_DB_NAME}
+      OCS_SSL_ENABLED: ${OCS_SSL_ENABLED}
+      OCS_DBI_PRINT_ERROR: ${OCS_DBI_PRINT_ERROR}
+    links:
+      - ocsdb
+    networks:
+      - localocs
+    depends_on:
+      ocsdb: 
+        condition: service_healthy
+
+  ocsdb:
+    image: mysql:8.0
+    container_name: ocsinventory-db
+    restart: always
+    expose:
+      - "3306"
+    volumes:
+      - ./sql/:/docker-entrypoint-initdb.d/
+      - ocs-server-sqldata:/var/lib/mysql
+    env_file: .env
+    environment:
+      TZ: ${TZ}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+    ports:
+      - "3306:3306"
+    networks:
+      - localocs
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "127.0.0.1", "-u", "$$MYSQL_USER", "--password=$$MYSQL_PASSWORD"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+  ocsproxy:
+    image: nginx:1.25
+    container_name: ocsinventory-proxy
+    restart: always
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./nginx/conf:/etc/nginx/templates
+      - ./nginx/certs:/etc/nginx/certs
+      - ./nginx/auth:/etc/nginx/auth
+    env_file: .env
+    environment:
+      LISTEN_PORT: ${LISTEN_PORT}
+      PORT_TYPE: ${PORT_TYPE}
+      SSL_CERT: ${SSL_CERT}
+      SSL_KEY: ${SSL_KEY}
+      API_AUTH_FILE: ${API_AUTH_FILE}
+      READ_TIMEOUT: ${READ_TIMEOUT}
+      CONNECT_TIMEOUT: ${CONNECT_TIMEOUT}
+      SEND_TIMEOUT: ${SEND_TIMEOUT}
+      MAX_BODY_SIZE: ${MAX_BODY_SIZE}
+    depends_on:
+      - ocsapplication
+    networks:
+      - localocs
+
+networks:
+  localocs:
+
+volumes:
+  perlcomdata:
+  ocsreportsdata:
+  varlibdata:
+  httpdconfdata:
+  profilesconfdata:
+  sqldata:
+  ocs-server-sqldata:
