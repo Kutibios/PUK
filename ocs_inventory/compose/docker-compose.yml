@@ -30,6 +30,7 @@ services:
       - ocsdb
     networks:
       - localocs
+      - monitoring_net
     depends_on:
       ocsdb: 
         condition: service_healthy
@@ -50,10 +51,9 @@ services:
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
       MYSQL_DATABASE: ${MYSQL_DATABASE}
-    ports:
-      - "3306:3306"
     networks:
       - localocs
+      - monitoring_net
     healthcheck:
       test: ["CMD", "mysqladmin" ,"ping", "-h", "127.0.0.1", "-u", "$$MYSQL_USER", "--password=$$MYSQL_PASSWORD"]
       interval: 10s
@@ -89,6 +89,8 @@ services:
 
 networks:
   localocs:
+  monitoring_net:
+    external: true
 
 volumes:
   perlcomdata:
