@@ -1,0 +1,22 @@
+version: '3'
+
+tasks:
+  setup:
+    desc: "Poetry ile projenin sanal ortamını ve bağımlılıklarını kurar."
+    cmds:
+      - poetry install
+
+  dev:
+    desc: "Geliştirme sunucusunu (FastAPI - Uvicorn) otomatik yenileme (reload) ile başlatır."
+    cmds:
+      - poetry run uvicorn puk_api.main:app --reload --host 0.0.0.0 --port 8000
+
+  test:
+    desc: "Tüm ünite testlerini çalıştırır."
+    cmds:
+      - echo "Henüz test yazılmadı." # pytest will be added soon
+
+  db-migrate:
+    desc: "Alembic ile veritabanı şemasını günceller (Migration)."
+    cmds:
+      - poetry run alembic upgrade head
