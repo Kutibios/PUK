@@ -1,0 +1,34 @@
+# ============================================================
+# PUK Core API — Geliştirme Ortamı Docker Compose
+# ============================================================
+
+services:
+  puk_db:
+    image: postgres:16-alpine # Hafif Alpine tabanlı resmi imaj
+    container_name: puk_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: puk_user
+      POSTGRES_PASSWORD: puk_secret # Şifre (prod'da .env ile değiştirmeyi unutma kuti)
+      POSTGRES_DB: puk_db # Oluşturulacak veritabanı adı
+    ports:
+      - "5433:5432" # Host:5433 → Container:5432 (Kendi makindeki olası bir Postgres ile çakışmamak için 5433 yaptık)
+    volumes:
+      - puk_postgres_data:/var/lib/postgresql/data # it can not be deleted.
+
+  # pgAdmin: Veritabanını tarayıcıdan görsel incelemek için
+  puk_pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: puk_pgadmin
+    restart: unless-stopped
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@puk.local
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "5050:80" # http://localhost:5050 adresinden erişilir
+    depends_on:
+      - puk_db
+
+# Kalıcı veri için named volume tanımı
+volumes:
+  puk_postgres_data:

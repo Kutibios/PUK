@@ -3,7 +3,7 @@ name = "puk-core-api"
 version = "0.1.0"
 description = "PUK Core API"
 authors = [
-    {name = "Kutay",email = "kutay@example.com"}
+    {name = "Kutay", email = "leventkutaysezer@gmail.com"}
 ]
 readme = "README.md"
 requires-python = "^3.11"
@@ -12,9 +12,13 @@ dependencies = [
     "uvicorn[standard] (>=0.41.0,<0.42.0)",
     "sqlalchemy (>=2.0.48,<3.0.0)",
     "psycopg2-binary (>=2.9.11,<3.0.0)",
-    "pydantic (>=2.12.5,<3.0.0)"
+    "pydantic (>=2.12.5,<3.0.0)",
+    "alembic (>=1.13.0,<2.0.0)"
 ]
 
+
+[tool.poetry]
+package-mode = false
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]

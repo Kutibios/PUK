@@ -2,21 +2,37 @@ version: '3'
 
 tasks:
   setup:
-    desc: "Poetry ile projenin sanal ortamını ve bağımlılıklarını kurar."
+    desc: "Poetry ile projenin bağımlılıklarını kurar."
     cmds:
       - poetry install
 
   dev:
-    desc: "Geliştirme sunucusunu (FastAPI - Uvicorn) otomatik yenileme (reload) ile başlatır."
+    desc: "Geliştirme sunucusunu otomatik yenileme ile başlatır."
+    deps: [db-up] # Geliştiricinin DB'yi unutmasını engeller
     cmds:
       - poetry run uvicorn puk_api.main:app --reload --host 0.0.0.0 --port 8000
 
   test:
     desc: "Tüm ünite testlerini çalıştırır."
     cmds:
-      - echo "Henüz test yazılmadı." # pytest will be added soon
+      - echo "Henüz test yazılmadı." # yakında pytest eklenecek
+
+  db-up:
+    desc: "PUK'a özel PostgreSQL ve pgAdmin servislerini Docker ile ayağa kaldırır."
+    cmds:
+      - docker compose -p puk_api -f compose/docker-compose.yml up -d
+
+  db-down:
+    desc: "PUK veritabanı servislerini durdurur ve siler."
+    cmds:
+      - docker compose -p puk_api -f compose/docker-compose.yml down
+
+  db-makemigrations:
+    desc: "Veritabanı modellerinde yapılan değişiklikleri algılar ve migration script oluşturur."
+    cmds:
+      - poetry run alembic -c alembic/alembic.ini revision --autogenerate -m "auto_schema_update"
 
   db-migrate:
-    desc: "Alembic ile veritabanı şemasını günceller (Migration)."
+    desc: "Oluşan migration'ları veritabanına uygular (Tabloları günceller)."
     cmds:
-      - poetry run alembic upgrade head
+      - poetry run alembic -c alembic/alembic.ini upgrade head
