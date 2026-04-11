@@ -3,6 +3,21 @@
 # ============================================================
 
 services:
+  # PUK Core API (FastAPI Backend)
+  puk_api:
+    build:
+      context: .. # Dockerfile'ı bir üst dizinde ara (puk_core_api)
+      dockerfile: Dockerfile
+    container_name: puk_fastapi
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    environment:
+      # Veritabanı URL'sini container isimleriyle güncelliyoruz (puk_db:5432)
+      - DATABASE_URL=postgresql://puk_user:puk_secret@puk_db:5432/puk_db
+    depends_on:
+      - puk_db # API kalkmadan önce DB hazır olmalı
+
   puk_db:
     image: postgres:16-alpine # Hafif Alpine tabanlı resmi imaj
     container_name: puk_postgres

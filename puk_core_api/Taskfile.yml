@@ -18,9 +18,9 @@ tasks:
       - echo "Henüz test yazılmadı." # yakında pytest eklenecek
 
   db-up:
-    desc: "PUK'a özel PostgreSQL ve pgAdmin servislerini Docker ile ayağa kaldırır."
+    desc: "Tüm PUK (API, DB, pgAdmin) servislerini Docker Compose ile ayağa kaldırır."
     cmds:
-      - docker compose -p puk_api -f compose/docker-compose.yml up -d
+      - docker compose -p puk_api -f compose/docker-compose.yml up -d --build
 
   db-down:
     desc: "PUK veritabanı servislerini durdurur ve siler."
