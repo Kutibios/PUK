@@ -19,8 +19,8 @@
 | Hafta | Tarih Aralığı | Planlanan İş | Tahmini Tamamlanma (%) | Durum |
 |-------|---------------|--------------|------------------------|-------|
 | 1 | 30.03.2026 - 05.04.2026 | Altyapı ve İzleme Sistemlerinin Kurulumu (OCS, Grafana vb.) | %10 | ✅ Tamamlandı |
-| 2 | GG.AA - GG.AA | PUK Çekirdek Servisi API ve Veritabanı Şeması Tasarımı | %20 | 🔄 Devam Ediyor |
-| 3 | GG.AA - GG.AA | İstek Uç Noktalarının (API Endpoints) ve CRUD İşlemlerinin Yazılması | %30 | ⬜ Başlamadı |
+| 2 | 06.04.2026 - 12.04.2026 | PUK Çekirdek Servisi API ve Veritabanı Şeması Tasarımı | %100 | ✅ Tamamlandı |
+| 3 | 13.04.2026 - 19.04.2026 | İstek Uç Noktalarının (API Endpoints) ve CRUD İşlemlerinin Yazılması | %30 | 🔄 Devam Ediyor |
 | 4 | GG.AA - GG.AA | Entegrasyon ve Analiz Motoru: OCS Verilerinin Çekilmesi | %40 | ⬜ Başlamadı |
 | 5 | GG.AA - GG.AA | Karar Destek Sistemi: Uyumluluk ve Skorlama Algoritmasının Yazılması | %50 | ⬜ Başlamadı |
 | 6 | GG.AA - GG.AA | Web Portalı GUI Geliştirimi: Kullanıcı Arama Motoru (Donanım-Yazılım Uyumlu mu?) | %60 | ⬜ Başlamadı |
@@ -62,3 +62,26 @@
 
 ---
 
+### Hafta 2 *(Tarih: 06.04.2026 - 12.04.2026)*
+
+**Plandaki hedef:**
+- Veritabanı şemasının (PostgreSQL) oluşturulması ve API projesinin (PUK Core API) temelinin atılması ve geliştirilmesi.
+
+**Bu hafta yaptıklarım:**
+- PUK Core API projesi modern bir yaklaşımla, FastAPI framework'ü kullanılarak başlatıldı.
+- Veritabanı modelleri ve şemaları (SQLAlchemy ORM kullanılarak) tasarlandı ve PostgreSQL bağlantısı başarıyla kuruldu.
+- Veritabanı versiyon kontrolü ve migrasyon işlemleri için Alembic entegrasyonu sağlandı.
+- Geliştirme ortamının otomatize edilmesi ve standartlaştırılması adına proje Nix-shell ve Taskfile (otomasyon aracı) kullanarak yapılandırıldı.
+- Projenin veri akışını yönetecek API yönlendirmelerinin (routing) ve CRUD (Oluşturma, Okuma, Güncelleme, Silme) işlemlerinin temelleri atıldı.
+- Yapılan tüm değişiklikler ve geliştirmeler git kullanılarak versiyonlandı ve anlamlı commit mesajlarıyla kayıt altına alındı.
+
+**Plana göre durumum:**
+- PUK Core API'nın temel yapısı ve veritabanı bağlantısı başarılı bir şekilde tasarlandı. Planlanan "PUK Çekirdek Servisi API ve Veritabanı Şeması Tasarımı" adımı tamamlanmış olup API geliştirme adımları takvime uygun biçimde ilerlemektedir.
+
+**Karşılaştığım sorunlar / zorluklar:**
+- Geliştirme ortamında (Nix) ve veritabanı migrasyonlarında (Alembic) başlangıçta ufak entegrasyon ayarlarıyla zaman kaybedilse de dökümantasyonlar eşliğinde doğru ortam değişkenlerinin (environment variables) konfigüre edilmesiyle sorun aşıldı. Ayrıca projenin uzun vadeli sürdürülebilirliği düşünülerek modüler bir klasör hiyerarşisi (routers, models, schemas vb.) kurmak için iyi bir tasarım planlaması yapıldı.
+
+**Gelecek hafta hedefim:**
+- İstek uç noktalarının (API Endpoints) ve CRUD işlemlerinin tamamlanması, ayrıca geliştirilen uç noktaların test edilip hazır hale getirilmesi.
+
+---
