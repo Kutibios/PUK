@@ -7,10 +7,15 @@ tasks:
       - poetry install
 
   dev:
-    desc: "Geliştirme sunucusunu otomatik yenileme ile başlatır."
-    deps: [db-up] # Geliştiricinin DB'yi unutmasını engeller
+    desc: "Tüm servisleri Docker Compose ile başlatır (API + DB + pgAdmin)."
     cmds:
-      - poetry run uvicorn puk_api.main:app --reload --host 0.0.0.0 --port 8000
+      - docker compose -p puk_api -f compose/docker-compose.yml up -d --build
+      - echo "API hazır → http://localhost:8000/docs"
+
+  logs:
+    desc: "API container loglarını canlı takip eder."
+    cmds:
+      - docker compose -p puk_api -f compose/docker-compose.yml logs -f puk_api
 
   test:
     desc: "Tüm ünite testlerini çalıştırır."

@@ -33,6 +33,18 @@ class HardwareCreate(HardwareBase):
     pass  # Şu an ekstra alan yok, Base yeterli
 
 
+class HardwareUpdate(BaseModel):
+    """
+    PATCH /hardware/{id} için request body şeması.
+    Tüm alanlar Optional — sadece gönderilen alanlar güncellenir.
+    """
+    vendor_id:           Optional[str]              = Field(None, example="8086")
+    device_id:           Optional[str]              = Field(None, example="1502")
+    name:                Optional[str]              = Field(None, example="Intel 82579LM Gigabit NIC")
+    category:            Optional[str]              = Field(None, example="NIC")
+    compatibility_level: Optional[CompatibilityLevel] = Field(None, example="gold")
+
+
 class HardwareResponse(HardwareBase):
     """
     GET /hardware/ yanıtı için şema.
@@ -63,6 +75,17 @@ class SoftwareBase(BaseModel):
 class SoftwareCreate(SoftwareBase):
     """POST /software/ için request body şeması."""
     pass
+
+
+class SoftwareUpdate(BaseModel):
+    """
+    PATCH /software/{id} için request body şeması.
+    Tüm alanlar Optional — sadece gönderilen alanlar güncellenir.
+    """
+    name:                Optional[str]              = Field(None, example="LibreOffice")
+    version:             Optional[str]              = Field(None, example="7.5.0")
+    publisher:           Optional[str]              = Field(None, example="The Document Foundation")
+    compatibility_level: Optional[CompatibilityLevel] = Field(None, example="gold")
 
 
 class SoftwareResponse(SoftwareBase):
