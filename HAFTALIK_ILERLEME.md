@@ -19,8 +19,8 @@
 | Hafta | Tarih Aralığı | Planlanan İş | Tahmini Tamamlanma (%) | Durum |
 |-------|---------------|--------------|------------------------|-------|
 | 1 | 30.03.2026 - 05.04.2026 | Altyapı ve İzleme Sistemlerinin Kurulumu (OCS, Grafana vb.) | %10 | ✅ Tamamlandı |
-| 2 | 06.04.2026 - 12.04.2026 | PUK Çekirdek Servisi API ve Veritabanı Şeması Tasarımı | %100 | ✅ Tamamlandı |
-| 3 | 13.04.2026 - 29.04.2026 | İstek Uç Noktalarının (API Endpoints) ve CRUD İşlemlerinin Yazılması | %100 | ✅ Tamamlandı |
+| 2 | 06.04.2026 - 12.04.2026 | PUK Çekirdek Servisi API ve Veritabanı Şeması Tasarımı | %20 | ✅ Tamamlandı |
+| 3 | 13.04.2026 - 29.04.2026 | İstek Uç Noktalarının (API Endpoints) ve CRUD İşlemlerinin Yazılması | %30 | ✅ Tamamlandı |
 | 4 | GG.AA - GG.AA | Entegrasyon ve Analiz Motoru: OCS Verilerinin Çekilmesi | %40 | ⬜ Başlamadı |
 | 5 | GG.AA - GG.AA | Karar Destek Sistemi: Uyumluluk ve Skorlama Algoritmasının Yazılması | %50 | ⬜ Başlamadı |
 | 6 | GG.AA - GG.AA | Web Portalı GUI Geliştirimi: Kullanıcı Arama Motoru (Donanım-Yazılım Uyumlu mu?) | %60 | ⬜ Başlamadı |
