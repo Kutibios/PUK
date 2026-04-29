@@ -85,3 +85,30 @@
 - İstek uç noktalarının (API Endpoints) ve CRUD işlemlerinin tamamlanması, ayrıca geliştirilen uç noktaların test edilip hazır hale getirilmesi.
 
 ---
+### Hafta 3 *(Tarih: 13.04.2026 - 29.04.2026)*
+
+**Plandaki hedef:**
+- İstek uç noktalarının (API Endpoints) ve CRUD işlemlerinin tamamlanması, geliştirilen uç noktaların test edilip hazır hale getirilmesi.
+
+**Bu hafta yaptıklarım:**
+- 13.04 - 26.04 tarihleri arasında vize sınavları nedeniyle proje çalışmalarına ara verildi.
+- Hardware ve Software router'larına PATCH (güncelleme) endpoint'leri eklendi.
+- GET endpoint'lerine arama ve filtreleme desteği getirildi (`name`, `category`, `vendor_id`, `compatibility_level`, `publisher` parametreleri).
+- `HardwareUpdate` ve `SoftwareUpdate` Pydantic şemaları oluşturuldu; kısmi güncelleme (partial update) desteği sağlandı.
+- Docker build süreci optimize edildi: Poetry bağımlılığı kaldırılarak `requirements.txt` + `pip` tabanlı daha hızlı ve sade bir Dockerfile yazıldı.
+- pgAdmin konfigürasyonu düzeltildi (e-posta doğrulama hatası giderildi).
+- Taskfile güncellendi; `dev` görevi artık API'yi Docker Compose üzerinden yönetiyor, `logs` görevi eklendi.
+- Tüm endpoint'ler Swagger UI üzerinden başarıyla test edildi.
+
+**Plana göre durumum:**
+- Vize dönemi nedeniyle gecikme yaşansa da hafta 3 hedefleri 29.04 itibarıyla tam olarak tamamlandı. API katmanı production-ready bir yapıya kavuştu.
+
+**Karşılaştığım sorunlar / zorluklar:**
+- Poetry kurulum scripti Docker build sürecinde çok uzun süre aldığından `pip` + `requirements.txt` yaklaşımına geçildi.
+- pgAdmin'in yeni sürümünde `.local` uzantılı e-posta adresleri geçersiz sayıldığından `docker-compose.yml` güncellendi.
+- `poetry.lock` dosyasının Poetry 2.2.1 ile oluşturulmuş olmasına karşın Dockerfile'ın 1.8.2 pinlemiş olması uyumsuzluk yarattı ve düzeltildi.
+
+**Gelecek hafta hedefim:**
+- OCS Inventory veritabanından donanım ve yazılım verilerinin otomatik olarak çekilmesi; Pardus uyumluluk skorlama algoritmasının tasarlanması ve geliştirilmesi.
+
+---
